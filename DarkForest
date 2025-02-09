@@ -128,3 +128,50 @@ togle:Play()
 isenab = not isenab
   light.Enabled = isenab
 end)
+
+local model = game:GetObjects("rbxassetid://13623106399")[1]
+model.Parent = workspace
+task.spawn(function()
+ while task.wait(10) do
+model:PivotTo(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 60))
+
+  for i = 1, 2 do
+local scar = Instance.new("Sound", model.PrimaryPart or model:FindFirstChildOfClass("Humanoid").RootPart)
+scar.SoundId = "rbxassetid://1294256110"
+scar.Volume = 1
+scar.PlaybackSpeed = 1
+scar:Play()
+game.Debris:AddItem(scar, 6)
+task.wait(3)
+   end
+ end
+end)
+
+task.spawn(function()
+while task.wait(0.1) do
+local parts = workspace:GetPartBoundsInRadius(model.Humanoid.RootPart.Position, 35)
+  for _, part in ipairs(parts) do
+     if part.Parent and part.Parent:IsA("Model") and part.Parent:FindFirstChildOfClass("Humanoid") and part.Parent == game.Players.LocalPlayer.Character then
+local humanoid = part.Parent:FindFirstChildOfClass("Humanoid")
+ if humanoid.Health <= 0 then return end
+model.Humanoid.RootPart.CFrame = humanoid.RootPart.CFrame
+humanoid.Health = 0
+humanoid.MaxHealth = 0
+humanoid.Parent["Right Arm"]:Destroy()
+humanoid.Parent.Torso:Destroy()
+humanoid.Parent["Left Leg"]:Destroy()
+
+local sound = Instance.new("Sound", model.PrimaryPart or model:FindFirstChildOfClass("Humanoid").RootPart)
+sound.SoundId = "rbxassetid://6186631227"
+sound.Volume = 3
+sound.PlaybackSpeed = 1
+sound.Looped = false
+sound:Play()
+game.Debris:AddItem(sound, 15)
+
+task.wait(0.2)
+game.Players.LocalPlayer:Kick("We will not forgive you")
+     end
+  end
+end
+end)
