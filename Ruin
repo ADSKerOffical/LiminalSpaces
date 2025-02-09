@@ -1,0 +1,51 @@
+local co = Instance.new("ColorCorrectionEffect", game.Lighting)
+co.Saturation = -1
+co.Contrast = 1
+co.Brightness = 0
+
+local sky = Instance.new("Sky", game.Lighting)
+sky.CelestialBodiesShown = false
+sky.StarCount = 0
+
+local fog = Instance.new("Atmosphere", game.Lighting)
+fog.Density = 0.4
+fog.Haze = 9
+fog.Color = Color3.new(0, 0, 0)
+
+game.Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
+game.Lighting.ExposureCompensation = 0.8
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10003, 0)
+game.Players.LocalPlayer.CameraMode = Enum.CameraMode.LockFirstPerson
+game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
+
+local baseplate = Instance.new("Part", workspace)
+baseplate.Anchored = true
+baseplate.Size = Vector3.new(10000, 2, 10000)
+baseplate.Material = "LeafyGrass"
+baseplate.Position = Vector3.new(0, 10000, 0)
+baseplate.Color = Color3.fromRGB(30, 30, 30)
+
+local ambience = Instance.new("Sound", workspace)
+ambience.SoundId = "rbxassetid://3619734707"
+ambience.Volume = 1
+ambience.PlaybackSpeed = 0.95
+ambience.Looped = true
+ambience:Play()
+
+local whisper = Instance.new("Sound", workspace)
+whisper.SoundId = "rbxassetid://9117118928"
+whisper.Volume = 0.6
+whisper.PlaybackSpeed = 1
+whisper.Looped = true
+whisper:Play()
+
+asset = game:GetObjects("rbxassetid://4554074669")[1]
+asset.Parent = workspace
+asset:MoveTo(baseplate.Position + Vector3.new(0, 1, 0))
+
+for _, part in next, asset:GetDescendants() do
+  if part:IsA("BasePart") then
+part.Anchored = true
+  end
+end
